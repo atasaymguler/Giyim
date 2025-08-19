@@ -3,6 +3,7 @@ import './App.css'
 import PageContainer from './container/PageContainer'
 import Header from './components/Header'
 import ProductList from './components/ProductList'
+import RouterConfig from './config/routerConfig'
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
     <>
       <PageContainer>
         <Header />
-        <ProductList />
+        < RouterConfig />
       </PageContainer>
     </>
   )
