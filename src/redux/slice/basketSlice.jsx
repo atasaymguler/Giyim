@@ -11,6 +11,8 @@ const getProductFromStorage = () => {
 
 const initialState = {
     products: getProductFromStorage(),
+    drawer: false,
+    totalAmount: 0
 
 }
 
@@ -42,11 +44,20 @@ export const basketSlice = createSlice({
                 console.log("Ürün Eklendi");
             }
 
+        },
+        setDrawer: (state) => {
+            state.drawer = !state.drawer
+        },
+        calcalute: (state) => {
+            state.totalAmount = 0;
+            state.products && state.products.map(product => {
+                state.totalAmount += product.price * product.count
+            })
         }
 
     },
 })
 
-export const { addBasket } = basketSlice.actions
+export const { addBasket, setDrawer, calcalute } = basketSlice.actions
 
 export default basketSlice.reducer

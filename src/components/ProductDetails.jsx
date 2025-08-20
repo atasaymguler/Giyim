@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { setSelectedProduct } from '../redux/slice/productSlice'
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
-import { addBasket } from '../redux/slice/basketSlice';
+import { addBasket, calcalute } from '../redux/slice/basketSlice';
 
 export default function ProductDetails() {
 
@@ -47,6 +47,7 @@ export default function ProductDetails() {
         }
         dispatch(addBasket(payload))
         setCount(0)
+        dispatch(calcalute())
     }
 
     return (

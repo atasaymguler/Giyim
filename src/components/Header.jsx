@@ -5,7 +5,8 @@ import { FaRegMoon } from "react-icons/fa";
 import { IoSunnySharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDrawer } from '../redux/slice/basketSlice';
 
 export default function Header() {
 
@@ -27,7 +28,9 @@ export default function Header() {
 
     let navigate = useNavigate()
 
-    let {products} = useSelector( store => store.basket)
+    let { products } = useSelector(store => store.basket)
+
+    let dispatch = useDispatch()
 
     return (
 
@@ -38,7 +41,7 @@ export default function Header() {
             </div>
             <div className='flex items-center gap-1.5'>
                 <input type='text' placeholder='Aranacak Ürünü Giriniz...' className='outline-none border-b border-b-cyan-500 py-1 px-2' />
-                <Badge badgeContent={products.length} color="primary">
+                <Badge onClick={() => dispatch(setDrawer())} className='hover:cursor-pointer' badgeContent={products.length} color="primary">
                     <CiShoppingBasket className='text-2xl' />
                 </Badge>
                 {
