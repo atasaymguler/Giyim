@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { calcaluteAmount } from '../../helpers/calcalute'
 
 let storageName = "basket"
 
@@ -49,15 +50,38 @@ export const basketSlice = createSlice({
             state.drawer = !state.drawer
         },
         calcalute: (state) => {
-            state.totalAmount = 0;
+            calcaluteAmount(state)
+        },
+        increment: (state, action) => {
             state.products && state.products.map(product => {
-                state.totalAmount += product.price * product.count
+                if (product.id == action.payload) {
+                    product.count += 1
+                }
             })
+            calcaluteAmount(state)
+            writeProductToStorage(state.products)
+        },
+        decrement: (state, action) => {
+            let newArray = state.products.filter(product => product.id != action.payload)
+            state.products && state.products.map(product => {
+                if (product.count > 1) {
+                    // 1'den fazla ürün var ise bir azaltır.
+                    if (product.id == action.payload) {
+                        product.count -= 1
+                    }
+                }
+                else {
+                    // 1 başka ürün yok o zaman listeden çıkartırız.
+                    state.products = [...newArray]
+                }
+            })
+            calcaluteAmount(state)
+            writeProductToStorage(state.products)
         }
 
     },
 })
 
-export const { addBasket, setDrawer, calcalute } = basketSlice.actions
+export const { addBasket, setDrawer, calcalute, increment, decrement } = basketSlice.actions
 
 export default basketSlice.reducer

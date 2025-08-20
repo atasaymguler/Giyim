@@ -8,7 +8,9 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux'
 import Drawer from '@mui/material/Drawer';
-import { calcalute, setDrawer } from './redux/slice/basketSlice'
+import { calcalute, decrement, increment, setDrawer } from './redux/slice/basketSlice'
+import { FaRegPlusSquare } from "react-icons/fa";
+import { FaRegMinusSquare } from "react-icons/fa";
 
 function App() {
 
@@ -37,11 +39,15 @@ function App() {
         >
           {
             products && products.map(product => (
-              <div className='flex items-center justify-between gap-3 !p-2'>
+              <div key={product.id} className='flex items-center justify-between gap-3 !p-2'>
                 <img className='w-[50px] h-[50px] object-scale-down' src={product.image} />
                 <p className='short w-[200px]'>{product.title}  </p>
-                <p>({product.count})</p>
-                <p> {product.price} </p>
+                <div className='w-[100px] flex items-center gap-1'>
+                  <FaRegPlusSquare onClick={() => dispatch(increment(product.id))} className='hover:cursor-pointer' />
+                  <p >({product.count})</p>
+                  <FaRegMinusSquare onClick={() => dispatch(decrement(product.id))}  className='hover:cursor-pointer' />
+                </div>
+                <p className='w-[40px]'> {product.price} </p>
                 <button> Sil </button>
               </div>
             ))
