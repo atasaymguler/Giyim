@@ -3,6 +3,7 @@ import foto from '../assets/1.png'
 import { CiShoppingBasket } from "react-icons/ci";
 import { FaRegMoon } from "react-icons/fa";
 import { IoSunnySharp } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
 
@@ -22,11 +23,13 @@ export default function Header() {
         setTheme(!theme)
     }
 
+    let navigate = useNavigate()
+
     return (
 
-        <div className='pt-2.5 flex justify-between items-center' >
+        <div className='!pt-2.5 flex justify-between items-center' >
             <div className='flex items-center gap-1.5 font-mono'>
-                <img className='w-[50px] h-[50px] rounded-[50%]' src={foto} />
+                <img onClick={() => navigate("/")} className='w-[50px] h-[50px] rounded-[50%] hover:cursor-pointer' src={foto} />
                 <p> Süheyla A.Ş </p>
             </div>
             <div className='flex items-center gap-1.5'>
