@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { setSelectedProduct } from '../redux/slice/productSlice'
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
+import { addBasket } from '../redux/slice/basketSlice';
 
 export default function ProductDetails() {
 
@@ -35,6 +36,19 @@ export default function ProductDetails() {
         }
     }
 
+    const addProductToBasket = () => {
+        let payload = {
+            id,
+            title,
+            price,
+            description,
+            image,
+            count
+        }
+        dispatch(addBasket(payload))
+        setCount(0)
+    }
+
     return (
         <div className='!mt-10 flex justify-center gap-7'>
             <div >
@@ -49,6 +63,7 @@ export default function ProductDetails() {
                     <span>{count}</span>
                     <CiCircleMinus onClick={minus} className='hover:cursor-pointer' />
                 </div>
+                <button onClick={addProductToBasket} className='!mt-5 bg-amber-300 text-2xl !py-1 !px-2 rounded-lg hover:cursor-pointer'> Satın Al </button>
             </div>
 
         </div>
