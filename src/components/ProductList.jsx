@@ -11,13 +11,15 @@ export default function ProductList() {
         dispatch(getAllProducts())
     }, [])
 
-    let { products } = useSelector((store) => store.products)
+    let { products, search, searchProducts } = useSelector((store) => store.products)
 
     return (
         <div className='flex items-center justify-center flex-wrap gap-2.5  !mt-8'>
 
             {
-                products && products.map(product => (
+                search ? searchProducts && searchProducts.map(product => (
+                    <Product key={product.id} product={product} />
+                )) : products && products.map(product => (
                     <Product key={product.id} product={product} />
                 ))
             }

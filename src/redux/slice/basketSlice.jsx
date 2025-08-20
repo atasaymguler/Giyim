@@ -36,13 +36,13 @@ export const basketSlice = createSlice({
                 findProduct.count += action.payload.count
                 state.products = [...filtredArray, findProduct]
                 writeProductToStorage(state.products)
-                console.log("Ürün Eklendi");
+
             }
             else {
                 // Aynı üründen yok.
                 state.products = [...state.products, action.payload]
                 writeProductToStorage(state.products)
-                console.log("Ürün Eklendi");
+
             }
 
         },
@@ -64,16 +64,16 @@ export const basketSlice = createSlice({
         decrement: (state, action) => {
             let newArray = state.products.filter(product => product.id != action.payload)
             state.products && state.products.map(product => {
-                if (product.count > 1) {
+                if (product.id == action.payload) {
                     // 1'den fazla ürün var ise bir azaltır.
-                    if (product.id == action.payload) {
+                    if (product.count > 1) {
                         product.count -= 1
                     }
+                    else {
+                        state.products = [...newArray]
+                    }
                 }
-                else {
-                    // 1 başka ürün yok o zaman listeden çıkartırız.
-                    state.products = [...newArray]
-                }
+
             })
             calcaluteAmount(state)
             writeProductToStorage(state.products)

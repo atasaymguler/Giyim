@@ -4,7 +4,9 @@ import axios from 'axios'
 const initialState = {
     products: [],
     loading: false,
-    selectedProduct: {}
+    selectedProduct: {},
+    searchProducts: [],
+    search: false
 }
 
 const baseUrl = "https://fakestoreapi.com/products"
@@ -23,6 +25,19 @@ export const productSlice = createSlice({
     reducers: {
         setSelectedProduct: (state, action) => {
             state.selectedProduct = action.payload
+        },
+        getSearchProducts: (state, action) => {
+            state.searchProducts = []
+            if (!action.payload) {
+                state.search = false
+                return
+            }
+            state.products && state.products.map(product => {
+                if (product.title.toLowerCase().includes(action.payload)) {
+                    state.searchProducts = [...state.searchProducts, product]
+                    state.search = true
+                }
+            })
         }
     }, extraReducers: (builder) => {
         builder.addCase(getAllProducts.pending, (state) => {
@@ -35,6 +50,6 @@ export const productSlice = createSlice({
     }
 })
 
-export const { setSelectedProduct } = productSlice.actions
+export const { setSelectedProduct, getSearchProducts } = productSlice.actions
 
 export default productSlice.reducer

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDrawer } from '../redux/slice/basketSlice';
+import { getSearchProducts } from '../redux/slice/productSlice';
 
 export default function Header() {
 
@@ -32,6 +33,12 @@ export default function Header() {
 
     let dispatch = useDispatch()
 
+    const searchProduct = (e) => {
+
+        let title = e.target.value.toLowerCase().trim()
+        dispatch(getSearchProducts(title))
+    }
+
     return (
 
         <div className='!pt-2.5 flex justify-between items-center' >
@@ -40,7 +47,7 @@ export default function Header() {
                 <p> Süheyla A.Ş </p>
             </div>
             <div className='flex items-center gap-1.5'>
-                <input type='text' placeholder='Aranacak Ürünü Giriniz...' className='outline-none border-b border-b-cyan-500 py-1 px-2' />
+                <input type='text' onChange={searchProduct} placeholder='Aranacak Ürünü Giriniz...' className='outline-none border-b border-b-cyan-500 py-1 px-2' />
                 <Badge onClick={() => dispatch(setDrawer())} className='hover:cursor-pointer' badgeContent={products.length} color="primary">
                     <CiShoppingBasket className='text-2xl' />
                 </Badge>
